@@ -15,9 +15,10 @@ typedef struct {
 } Linked_List;
 
 Linked_List* linked_list_init(void);
-void linked_list_append(Linked_List* list, const void* value, size_t size);
-void* linked_list_get(const Linked_List* list, size_t index);
-void linked_list_remove(Linked_List* list, size_t index);
+void linked_list_append_item(Linked_List* list, void* item);
+void* linked_list_get_item(const Linked_List* list, size_t index);
+void linked_list_set_item(Linked_List* list, size_t index, void* item);
+void linked_list_remove_item(Linked_List* list, size_t index);
 void linked_list_destroy(Linked_List* list);
 
 #endif
