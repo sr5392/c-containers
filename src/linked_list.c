@@ -4,7 +4,7 @@
 #include <stddef.h>
 #include <stdio.h>
 
-Linked_List* linked_list_init() {
+Linked_List* linked_list_init(void) {
     Linked_List* list = malloc(sizeof(Linked_List));
     if (!list) {
         fprintf(stderr, "Error allocating memory for list");
@@ -20,7 +20,6 @@ static Linked_List_Entry* linked_list_create_entry(void* item) {
     assert(item);
     Linked_List_Entry* entry = malloc(sizeof(Linked_List_Entry));
     if (!entry) {
-        free(item);
         fprintf(stderr, "Error allocating memory for list entry");
         exit(EXIT_FAILURE);
     }
@@ -71,7 +70,6 @@ void* linked_list_get_item(const Linked_List* list, size_t index) {
 
 void linked_list_set_item(Linked_List* list, size_t index, void* item) {
     Linked_List_Entry* entry = linked_list_get_entry(list, index);
-    free(entry->value);
     entry->value = item;
 }
 
@@ -84,7 +82,6 @@ void linked_list_remove_item(Linked_List* list, size_t index) {
         list->head = entry->next;
     if (entry->next) entry->next->prev = entry->prev;
     if (index == list->size - 1) list->tail = entry->prev;
-    free(entry->value);
     free(entry);
     --list->size;
 }
@@ -94,7 +91,6 @@ void linked_list_destroy(Linked_List* list) {
     Linked_List_Entry* curr = list->head;
     while (curr) {
         Linked_List_Entry* next = curr->next;
-        free(curr->value);
         free(curr);
         curr = next;
     }
